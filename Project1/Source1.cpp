@@ -4,6 +4,14 @@
 #include <vector>
 #include<algorithm>
 
+void refresh()
+{
+	static bool x = static_cast<bool>(system("cls"));
+	if (x == 0)
+		system("cls");
+	else
+		system("clear");
+}
 
 struct date
 {
@@ -129,15 +137,16 @@ int main()
 	std::string s, s1;
 	movie m;
 	int opt;
-	bool a = true;
 	std::ofstream fout;
 	std::ifstream fin;
 	while (true)
 	{
 		std::cout << "MENU\n PLS SELECT OPTIONS ACCORDING TO WHAT OPERATION YOU WANT TO PERFORM\n";
-		std::cout << "1)Add new movies to the List\n2)Remove movies from the list\n3)Display Movies from the List\n4)Exit the program\n";
+		std::cout << "1)Add new movies to the List\n2)Remove movies from the list\n3)Display Movies from the List\n";
+		std::cout<<"4)Delete the entire list\n5)Exit the program\n";
 		std::cin >> opt;
-		if (opt == 4)
+		refresh();
+		if (opt == 5)
 			exit(0);
 		else if (opt == 1)
 		{
@@ -150,7 +159,10 @@ int main()
 			m.push();
 			fout<<'\n'<< m.M_name << '\n' << m.M_Genre << '\n' << m.review << '\n' << m.M_rdate << '\n' << m.A_Name;
 			fout.close();
+			refresh();
 			std::cout << "The movie has been added\n";
+			std::cin.get();
+			refresh();
 
 		}
 		else if (opt == 2)
@@ -158,6 +170,7 @@ int main()
 			opt = 1;
 			std::cout << "Pls enter the name of the movie u want to remove : ";
 			std::cin >> s;
+			refresh();
 			fout.open("temp.txt", std::ios::out);
 			fin.open("data.txt", std::ios::in);
 			if (fout.fail())
@@ -201,6 +214,8 @@ int main()
 				std::cout << "The Movie has been removed\n";
 			else
 				std::cerr << "Error :  Operation could not compleate\n";
+			std::cin.get();
+			refresh();
 			
 		}
 		else if (opt == 3)
@@ -209,8 +224,10 @@ int main()
 			std::cout << "1)According to alphabetical order\n2)According to release date(newer release at top)\n";
 			std::cout << "3)According to review(highest review first)\n";
 			std::cin >> opt;
+			refresh();
 			std::cout << "Do you want to to display movies spesific to a genre(Y/N) : ";
 			std::cin >> z;
+			refresh();
 			if (z == 'Y' || z == 'y')
 			{
 				std::cout << "PLS SELECT THE GENRE ON THE MOVIES TO BE DISPLAYED\n";
@@ -251,8 +268,18 @@ int main()
 				exit(1);
 			}
 			vec.clear();
-			
+			std::cin.get();
+			refresh();
 		}
+		else if (opt == 4)
+		{
+			remove("data.txt");
+			std::cout << "The List has been deleted\n";
+			std::cin.get();
+			refresh();
+
+		}
+		
 		else
 		{
 			std::cout << "Invalid Input (exiting program)";
