@@ -3,6 +3,7 @@
 #include<string>
 #include <vector>
 #include<algorithm>
+#include<cstdio>
 
 void refresh()
 {
@@ -65,15 +66,15 @@ public:
 	void push()
 	{
 		std::cout << "Name(First letter capital) : ";
-		std::cin >> M_name;
+		std::getline(std::cin, M_name);
 		std::cout << "Genre : ";
-		std::cin >> M_Genre;
-		std::cout << "Review : ";
+		std::getline (std::cin, M_Genre);
+		std::cout << "Review out of 10: ";
 		std::cin >> review;
 		std::cout << "Release date(dd mm yyyy format) : ";
 		std::cin >> M_rdate;
 		std::cout << "Registry Author Name : ";
-		std::cin >> A_Name;
+		std::getline(std::cin, A_Name);
 	}
 	
 	int print()
@@ -185,7 +186,7 @@ int main()
 			}
 			while (!fin.eof())
 			{
-				fin >> s1;
+				std::getline(fin, s1);
 				if (s1 != s)
 				{
 					fout << s1;
@@ -225,7 +226,7 @@ int main()
 			std::cout << "3)According to review(highest review first)\n";
 			std::cin >> opt;
 			refresh();
-			std::cout << "Do you want to to display movies spesific to a genre(Y/N) : ";
+			std::cout << "Do you want to to display movies specific to a genre(Y/N) : ";
 			std::cin >> z;
 			refresh();
 			if (z == 'Y' || z == 'y')
@@ -243,7 +244,12 @@ int main()
 			}
 			while (!fin.eof())
 			{
-				fin >> m.M_name >> m.M_Genre >> m.review >> m.M_rdate >> m.A_Name;
+				
+				std::getline(fin, m.M_name);
+				std::getline(fin, m.M_Genre);
+				fin >> m.review;
+				std::cin >> m.M_rdate;
+				std::getline(fin, m.A_Name);
 				vec.emplace_back(m);
 			}
 			fin.close();
